@@ -843,10 +843,9 @@ MonoBehaviour:
   - {fileID: 452637404}
   - {fileID: 407536851}
   - {fileID: 302008780}
-  - {fileID: 0}
-  - {fileID: 0}
-  _nextTime: 0
-  _timeFrame: 5
+  nextCube: {fileID: 0}
+  currentCube: {fileID: 0}
+  cubeDistance: {x: 0, y: 0, z: 0}
 --- !u!1001 &990361169851540638
 PrefabInstance:
   m_ObjectHideFlags: 0
