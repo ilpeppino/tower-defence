@@ -25,6 +25,7 @@ public class Cube : MonoBehaviour
 
     private void GetComponentReferences()
     {
+
         _waypoint = GetComponent<Waypoint>();
         _label    = GetComponentInChildren<TextMesh>();
 
