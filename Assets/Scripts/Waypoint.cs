@@ -14,6 +14,11 @@ public class Waypoint : MonoBehaviour
             Mathf.RoundToInt(transform.position.z / CUBESIZE ));
     }
 
+    public void SetWaypointColor(Color _color)
+    {
+        transform.GetComponent<MeshRenderer>().material.color = _color;
+    }
+
 
 
 
