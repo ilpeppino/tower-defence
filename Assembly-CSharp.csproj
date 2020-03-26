@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\CubesHandler.cs" />
     <Compile Include="Assets\Scripts\EditorHelper.cs" />
     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
+    <Compile Include="Assets\Scripts\Waypoint.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/gitrepo/Tower Defence/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

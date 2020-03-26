@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+// Script attached to Path
+
 public class CubesHandler : MonoBehaviour
 {
 

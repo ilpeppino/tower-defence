@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
-using System.Linq;
+
+
+// Script attached to Enemy
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -29,19 +30,25 @@ public class EnemyMovement : MonoBehaviour
     {
         //_path = GetComponentsInChildren<Cube>().Cast<Cube>().ToList();
 
-        if (cubeDistance != Vector3.zero)
+        if (nextCube != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextCube.transform.position, 0.2f);
-            cubeDistance = nextCube.transform.position - transform.position;
+            if (cubeDistance != Vector3.zero)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, nextCube.transform.position, 0.5f);
+                cubeDistance = nextCube.transform.position - transform.position;
 
+            }
+            else
+            {
+                
+                currentCube = nextCube;
+                nextCube = _path[cubeCounter + 1];              
+                cubeDistance = nextCube.transform.position - currentCube.transform.position;
+                cubeCounter++;
+            }
         }
-        else
-        {
-            currentCube = nextCube;
-            nextCube = _path[cubeCounter + 1];
-            cubeDistance = nextCube.transform.position - currentCube.transform.position;
-            cubeCounter++;
-        }
+
+
 
     }
 
