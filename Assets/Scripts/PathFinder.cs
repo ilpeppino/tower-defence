@@ -61,7 +61,7 @@ public class PathFinder : MonoBehaviour
 
     private void FindPath()
     {
-        // Initializes the pathfinding markers variables
+        // Initializes the pathfinding variables
         var _currentWaypoint = _startWaypoint;
         _queue.Enqueue(_startWaypoint);
 
@@ -78,6 +78,8 @@ public class PathFinder : MonoBehaviour
                 // Enqueues all its neighbor waypoints
                 ExploreNeighbors(_currentWaypoint);
 
+                // Set current waypoint as explored
+                _currentWaypoint.isExplored = true;
             }
         }
 
@@ -87,30 +89,51 @@ public class PathFinder : MonoBehaviour
 
     }
 
-    private void ExploreNeighbors(Waypoint _waypoint)
+    private void ExploreNeighbors(Waypoint waypoint)
     {
         // Iterates over the 4 directions (NSWE) and enqueues the waypoints 
         foreach (Vector2Int _direction in _compass)
         {
-            var _waypointKey = _waypoint.GetGridPos() + _direction;
+            // Get the key of the neighbor waypoint
+            var _neighborWaypointKey = waypoint.GetGridPos() + _direction;
+
             try
             {
-                var _waypointValue = _grid[_waypointKey];
-                _waypointValue = _grid[_waypointKey];
-                _waypointValue.SetWaypointColor(Color.white);
-                _queue.Enqueue(_waypointValue);
-                Debug.Log(_waypointValue + " - queued");
+                // Get the waypoint from the grid dictionary
+                var _neighborWaypoint = _grid[_neighborWaypointKey];
+
+                // Determines if this was already explored
+                bool _isAlreadyExplored = (_neighborWaypoint.isExplored || 
+                                           _queue.Contains(_endWaypoint));
+
+                // If not explored, the waypoint is queued
+                if (!_isAlreadyExplored) { QueueWaypoint(_neighborWaypoint); }
+                
             }
             
             catch
             {
-                Debug.LogWarning(_waypointKey + " - do not exist");
+                Debug.LogWarning(_neighborWaypointKey + " - do not exist");
             }
             
             
             
         }
 
+    }
+
+    private void QueueWaypoint(Waypoint _waypointValue)
+    {
+        // Queue waypoint
+        _queue.Enqueue(_waypointValue);
+
+        // Set flag to true
+        _waypointValue.isExplored = true;
+
+        // Change the color of the explored waypoint to white
+        _waypointValue.SetWaypointColor(Color.white);
+
+        Debug.Log(_waypointValue + " - queued");
     }
 
     private bool isEndReached(Waypoint _currentWaypoint)

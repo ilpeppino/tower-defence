@@ -7,6 +7,9 @@ public class Waypoint : MonoBehaviour
 
     private const int CUBESIZE = 10;
 
+    [SerializeField] public bool isExplored;
+    [SerializeField] public Waypoint exploredFrom; 
+
     public Vector2Int GetGridPos()
     {
         return new Vector2Int(
