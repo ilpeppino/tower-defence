@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private PathFinder _pathFinder;
-    Waypoint _currentWaypont, _nextWaypoint;
+    Waypoint _currentWaypont;
     private List<Waypoint> _waypoints;
 
     private int i = 0;
@@ -18,19 +18,34 @@ public class EnemyMovement : MonoBehaviour
         _pathFinder = FindObjectOfType<PathFinder>();
         _waypoints = _pathFinder.GetFinalPath();
 
-        _currentWaypont = _waypoints[0];
-        _nextWaypoint = _waypoints[1];
+        i = 0;
+        _currentWaypont = _waypoints[i];
 
-        transform.position = _currentWaypont.GetWorldPosition();
+
+        //transform.position = _currentWaypont.GetWorldPosition();
     }
 
     private void Update()
     {
-        while (_currentWaypont != null)
+        
+        if (transform.position == _currentWaypont.GetWorldPosition())
         {
-
+            i++;
+            try
+            {
+                _currentWaypont = _waypoints[i];
+                _currentWaypont.SetWaypointColor(Color.yellow);
+            }
+            catch
+            {
+                Debug.Log("Enemy reached endpoint");
+            }
         }
+
+        transform.position = Vector3.MoveTowards(transform.position, _currentWaypont.GetWorldPosition(), 0.3f);
+
     }
+
 
 
 
