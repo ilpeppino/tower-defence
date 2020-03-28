@@ -21,17 +21,22 @@ public class PathFinder : MonoBehaviour
     // Used for path finding algorithm
     private Queue<Waypoint> _queue = new Queue<Waypoint>();
 
-    [SerializeField] private bool _isEndNodeFound;
+
     [SerializeField] private Waypoint _startWaypoint;
     [SerializeField] private Waypoint _endWaypoint;
-    
+    [SerializeField] private Waypoint _currentWaypoint;
+    [SerializeField] private bool _isEndNodeFound;
+    [SerializeField] private List<Waypoint> _finalPath;
+
 
     private void Awake()
     {
         LoadAllBlocks();
         GenerateDictionary();
         ColorStartEndBlocks();
-        FindPath();
+        ExplorePath();
+        GetPath();
+
     }
 
     private void LoadAllBlocks()
@@ -56,27 +61,24 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-
-
-
-    private void FindPath()
+    private void ExplorePath()
     {
         // Initializes the pathfinding variables
-        var _currentWaypoint = _startWaypoint;
+        _currentWaypoint = _startWaypoint;
         _queue.Enqueue(_startWaypoint);
 
         // Iterates as long as the queue is not empty or the end node is found
-        while(_queue.Count > 0 && !isEndReached(_currentWaypoint))
+        while(_queue.Count > 0 && !isEndReached())
         {
             // Picks up the first waypoint from the queue
             _currentWaypoint = _queue.Dequeue();
             Debug.Log(_currentWaypoint + " - dequeued");
 
             // Checks if that waypoint is the end waypoint
-            if (!isEndReached(_currentWaypoint))
+            if (!isEndReached())
             {
                 // Enqueues all its neighbor waypoints
-                ExploreNeighbors(_currentWaypoint);
+                ExploreNeighbors();
 
                 // Set current waypoint as explored
                 _currentWaypoint.isExplored = true;
@@ -89,13 +91,13 @@ public class PathFinder : MonoBehaviour
 
     }
 
-    private void ExploreNeighbors(Waypoint waypoint)
+    private void ExploreNeighbors()
     {
         // Iterates over the 4 directions (NSWE) and enqueues the waypoints 
         foreach (Vector2Int _direction in _compass)
         {
             // Get the key of the neighbor waypoint
-            var _neighborWaypointKey = waypoint.GetGridPos() + _direction;
+            var _neighborWaypointKey = _currentWaypoint.GetGridPos() + _direction;
 
             try
             {
@@ -107,7 +109,12 @@ public class PathFinder : MonoBehaviour
                                            _queue.Contains(_endWaypoint));
 
                 // If not explored, the waypoint is queued
-                if (!_isAlreadyExplored) { QueueWaypoint(_neighborWaypoint); }
+                if (!_isAlreadyExplored) 
+                { 
+
+                    QueueWaypoint(_neighborWaypoint);
+
+                }
                 
             }
             
@@ -127,8 +134,9 @@ public class PathFinder : MonoBehaviour
         // Queue waypoint
         _queue.Enqueue(_waypointValue);
 
-        // Set flag to true
+        // Set waypoint attributes for path 
         _waypointValue.isExplored = true;
+        _waypointValue.exploredFrom = _currentWaypoint;
 
         // Change the color of the explored waypoint to white
         _waypointValue.SetWaypointColor(Color.white);
@@ -136,11 +144,32 @@ public class PathFinder : MonoBehaviour
         Debug.Log(_waypointValue + " - queued");
     }
 
-    private bool isEndReached(Waypoint _currentWaypoint)
+    private bool isEndReached()
     {
         return (_currentWaypoint == _endWaypoint);
         
     }
 
+    private void GetPath()
+    {
 
+        Waypoint _waypointInPath = _endWaypoint;
+        
+
+        while (_waypointInPath != _startWaypoint)
+        {
+            _finalPath.Add(_waypointInPath);
+            _waypointInPath = _waypointInPath.exploredFrom;
+        }
+
+        _finalPath.Add(_startWaypoint);
+
+        _finalPath.Reverse();
+
+        
+
+
+
+
+    }
 }
