@@ -26,16 +26,18 @@ public class PathFinder : MonoBehaviour
     [SerializeField] private Waypoint _endWaypoint;
     [SerializeField] private Waypoint _currentWaypoint;
     [SerializeField] private bool _isEndNodeFound;
-    [SerializeField] private List<Waypoint> _finalPath;
+    [SerializeField] public List<Waypoint> _finalPath;
 
 
-    private void Awake()
+    public List<Waypoint> GetFinalPath()
     {
         LoadAllBlocks();
         GenerateDictionary();
         ColorStartEndBlocks();
-        ExplorePath();
+        SearchForPath();
         GetPath();
+
+        return _finalPath;
 
     }
 
@@ -61,7 +63,7 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    private void ExplorePath()
+    private void SearchForPath()
     {
         // Initializes the pathfinding variables
         _currentWaypoint = _startWaypoint;
@@ -71,8 +73,9 @@ public class PathFinder : MonoBehaviour
         while(_queue.Count > 0 && !isEndReached())
         {
             // Picks up the first waypoint from the queue
+            // Debug.Log(_currentWaypoint + " - dequeued");
             _currentWaypoint = _queue.Dequeue();
-            Debug.Log(_currentWaypoint + " - dequeued");
+            
 
             // Checks if that waypoint is the end waypoint
             if (!isEndReached())
@@ -85,9 +88,7 @@ public class PathFinder : MonoBehaviour
             }
         }
 
-        Debug.Log(_currentWaypoint + " - node found");
-
-
+        //Debug.Log(_currentWaypoint + " - node found");
 
     }
 
@@ -135,13 +136,11 @@ public class PathFinder : MonoBehaviour
         _queue.Enqueue(_waypointValue);
 
         // Set waypoint attributes for path 
+        // Debug.Log(_waypointValue + " - queued");
         _waypointValue.isExplored = true;
         _waypointValue.exploredFrom = _currentWaypoint;
 
-        // Change the color of the explored waypoint to white
-        _waypointValue.SetWaypointColor(Color.white);
-
-        Debug.Log(_waypointValue + " - queued");
+        
     }
 
     private bool isEndReached()
@@ -166,10 +165,11 @@ public class PathFinder : MonoBehaviour
 
         _finalPath.Reverse();
 
+        foreach (Waypoint wp in _finalPath)
+        {
+            Debug.Log(wp);
+        }
+
         
-
-
-
-
     }
 }

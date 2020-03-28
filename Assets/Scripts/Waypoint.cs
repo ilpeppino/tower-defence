@@ -5,7 +5,7 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour
 {
 
-    private const int CUBESIZE = 10;
+    public const int CUBESIZE = 10;
 
     [SerializeField] public bool isExplored;
     [SerializeField] public Waypoint exploredFrom; 
@@ -15,6 +15,11 @@ public class Waypoint : MonoBehaviour
         return new Vector2Int(
             Mathf.RoundToInt(transform.position.x / CUBESIZE ),
             Mathf.RoundToInt(transform.position.z / CUBESIZE ));
+    }
+
+    public Vector3 GetWorldPosition()
+    {
+        return transform.position;
     }
 
     public void SetWaypointColor(Color _color)

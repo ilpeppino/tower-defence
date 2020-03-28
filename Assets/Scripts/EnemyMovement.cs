@@ -6,12 +6,50 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    private PathFinder _pathFinder;
+    Waypoint _currentWaypont, _nextWaypoint;
+    private List<Waypoint> _waypoints;
 
-    [SerializeField] private List<Cube> _path;
+    private int i = 0;
+
+    private void Awake()
+    {
+
+        _pathFinder = FindObjectOfType<PathFinder>();
+        _waypoints = _pathFinder.GetFinalPath();
+
+        _currentWaypont = _waypoints[0];
+        _nextWaypoint = _waypoints[1];
+
+        transform.position = _currentWaypont.GetWorldPosition();
+    }
+
+    private void Update()
+    {
+        while (_currentWaypont != null)
+        {
+
+        }
+    }
+
+
+
+
+
+
+
+}
+
+
+/*public class EnemyMovement : MonoBehaviour
+{
+
+    [SerializeField] private List<Waypoint> _path;
    
-    [SerializeField] private Cube nextCube;
-    [SerializeField] private Cube currentCube;
+    [SerializeField] private Waypoint nextCube;
+    [SerializeField] private Waypoint currentCube;
     [SerializeField] private Vector3 cubeDistance;
+
 
     private int cubeCounter = 0;
 
@@ -51,3 +89,4 @@ public class EnemyMovement : MonoBehaviour
     }
 
 }
+*/
