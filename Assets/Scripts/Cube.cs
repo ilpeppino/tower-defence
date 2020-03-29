@@ -3,8 +3,6 @@
 // Script attached to Path/Cube
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(Waypoint))]
-
 public class Cube : MonoBehaviour
 {
 

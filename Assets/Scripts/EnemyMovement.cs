@@ -1,16 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 // Script attached to Enemy
 
 public class EnemyMovement : MonoBehaviour
 {
+    private const float TIMEBETWEENMOVES = 5f;
     private PathFinder _pathFinder;
     Waypoint _currentWaypont;
     private List<Waypoint> _waypoints;
+    private float _nextMovingTime;
 
-    private int i = 0;
+    [SerializeField] public Text elapsedTime;
+    [SerializeField] public Text nextTime;
+
+    private int _wpIndex = 0;
 
     private void Awake()
     {
@@ -18,39 +23,48 @@ public class EnemyMovement : MonoBehaviour
         _pathFinder = FindObjectOfType<PathFinder>();
         _waypoints = _pathFinder.GetFinalPath();
 
-        i = 0;
-        _currentWaypont = _waypoints[i];
+        _wpIndex = 0;
+        _currentWaypont = _waypoints[_wpIndex];
+
+        _nextMovingTime = TIMEBETWEENMOVES;
 
     }
 
     private void Update()
     {
+        // TODO: To remove
+        elapsedTime.text = Time.time.ToString();
+        nextTime.text = _nextMovingTime.ToString();
         
+        // Has the player reached the waypoint?
         if (transform.position == _currentWaypont.GetWorldPosition())
         {
-            i++;
-            try
-            {
-                _currentWaypont = _waypoints[i];
-                _currentWaypont.SetWaypointColor(Color.yellow);
-            }
-            catch
-            {
-                Debug.Log("Enemy reached endpoint");
-            }
-        }
 
-        transform.position = Vector3.MoveTowards(transform.position, _currentWaypont.GetWorldPosition(), 0.1f);
+            // Get the next waypoint and let the player move only when time window is expired
+            if (Time.time > _nextMovingTime)
+            {
+                GetNextWaypoint();
+            } 
+        } 
+
+        else  { transform.position = Vector3.MoveTowards(transform.position, _currentWaypont.GetWorldPosition(), 0.5f);   }
 
     }
 
-
-
-
-
-
-
-
+    private void GetNextWaypoint()
+    {
+        _wpIndex++;
+        try
+        {
+            _currentWaypont = _waypoints[_wpIndex];
+            _currentWaypont.SetWaypointColor(Color.yellow);
+            _nextMovingTime += TIMEBETWEENMOVES;
+        }
+        catch
+        {
+            Debug.Log("Enemy reached endpoint");
+        }
+    }
 }
 
 

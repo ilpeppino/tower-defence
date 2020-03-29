@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\PathFinder.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
+    <Compile Include="Assets\Scripts\TimeHandler.cs" />
     <Compile Include="Assets\Scripts\Waypoint.cs" />
     <None Include="Assets\AurynSky\Forest Pack\READ ME.txt" />
     <Reference Include="Unity.Timeline.Editor">

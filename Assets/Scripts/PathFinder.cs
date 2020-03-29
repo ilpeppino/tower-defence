@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
+    #region PRIVATE VARIABLES
 
     // Maps each cube (waypoint) in path with its position in the world
     private Dictionary<Vector2Int, Waypoint> _grid = new Dictionary<Vector2Int, Waypoint>();
@@ -26,20 +27,16 @@ public class PathFinder : MonoBehaviour
     [SerializeField] private Waypoint _endWaypoint;
     [SerializeField] private Waypoint _currentWaypoint;
     [SerializeField] private bool _isEndNodeFound;
+
+    #endregion
+
+    #region PUBLIC VARIABLES
+
     [SerializeField] public List<Waypoint> _finalPath;
 
+    #endregion
 
-    public List<Waypoint> GetFinalPath()
-    {
-        LoadAllBlocks();
-        GenerateDictionary();
-        ColorStartEndBlocks();
-        SearchForPath();
-        GetPath();
-
-        return _finalPath;
-
-    }
+    #region PRIVATE METHODS
 
     private void LoadAllBlocks()
     {
@@ -70,12 +67,12 @@ public class PathFinder : MonoBehaviour
         _queue.Enqueue(_startWaypoint);
 
         // Iterates as long as the queue is not empty or the end node is found
-        while(_queue.Count > 0 && !isEndReached())
+        while (_queue.Count > 0 && !isEndReached())
         {
             // Picks up the first waypoint from the queue
             // Debug.Log(_currentWaypoint + " - dequeued");
             _currentWaypoint = _queue.Dequeue();
-            
+
 
             // Checks if that waypoint is the end waypoint
             if (!isEndReached())
@@ -106,26 +103,26 @@ public class PathFinder : MonoBehaviour
                 var _neighborWaypoint = _grid[_neighborWaypointKey];
 
                 // Determines if this was already explored
-                bool _isAlreadyExplored = (_neighborWaypoint.isExplored || 
+                bool _isAlreadyExplored = (_neighborWaypoint.isExplored ||
                                            _queue.Contains(_endWaypoint));
 
                 // If not explored, the waypoint is queued
-                if (!_isAlreadyExplored) 
-                { 
+                if (!_isAlreadyExplored)
+                {
 
                     QueueWaypoint(_neighborWaypoint);
 
                 }
-                
+
             }
-            
+
             catch
             {
                 Debug.LogWarning(_neighborWaypointKey + " - do not exist");
             }
-            
-            
-            
+
+
+
         }
 
     }
@@ -140,20 +137,20 @@ public class PathFinder : MonoBehaviour
         _waypointValue.isExplored = true;
         _waypointValue.exploredFrom = _currentWaypoint;
 
-        
+
     }
 
     private bool isEndReached()
     {
         return (_currentWaypoint == _endWaypoint);
-        
+
     }
 
     private void GetPath()
     {
 
         Waypoint _waypointInPath = _endWaypoint;
-        
+
 
         while (_waypointInPath != _startWaypoint)
         {
@@ -170,6 +167,25 @@ public class PathFinder : MonoBehaviour
             Debug.Log(wp);
         }
 
-        
+
     }
+
+    #endregion
+
+    #region PUBLIC METHODS
+
+    public List<Waypoint> GetFinalPath()
+    {
+        LoadAllBlocks();
+        GenerateDictionary();
+        ColorStartEndBlocks();
+        SearchForPath();
+        GetPath();
+
+        return _finalPath;
+
+    }
+
+    #endregion
+
 }
