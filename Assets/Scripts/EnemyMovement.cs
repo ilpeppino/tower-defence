@@ -21,8 +21,6 @@ public class EnemyMovement : MonoBehaviour
         i = 0;
         _currentWaypont = _waypoints[i];
 
-
-        //transform.position = _currentWaypont.GetWorldPosition();
     }
 
     private void Update()
@@ -42,7 +40,7 @@ public class EnemyMovement : MonoBehaviour
             }
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, _currentWaypont.GetWorldPosition(), 0.3f);
+        transform.position = Vector3.MoveTowards(transform.position, _currentWaypont.GetWorldPosition(), 0.1f);
 
     }
 

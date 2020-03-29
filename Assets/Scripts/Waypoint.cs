@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
 
-    public const int CUBESIZE = 10;
+    [SerializeField] public const int CUBESIZE = 2;
 
     [SerializeField] public bool isExplored;
     [SerializeField] public Waypoint exploredFrom; 
