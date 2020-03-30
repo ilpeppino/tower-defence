@@ -75,6 +75,16 @@
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\TimeHandler.cs" />
     <Compile Include="Assets\Scripts\Waypoint.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\Enemy.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\EnemyBullet.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\EnemyHp.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\Tower.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\TowerBullet.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\TowerHP.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\TowerTrigger.cs" />
+    <Compile Include="Assets\TowerDefence_Vsquad\Scripts\WaveSpawn.cs" />
+    <None Include="Assets\TowerDefence_Vsquad\INFO\Info.txt" />
+    <None Include="Assets\TowerDefence_Vsquad\Materials\Scene\sky.shader" />
     <None Include="Assets\AurynSky\Forest Pack\READ ME.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/gitrepo/Tower Defence/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
