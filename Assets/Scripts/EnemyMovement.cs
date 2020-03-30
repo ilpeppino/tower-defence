@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private const float TIMEBETWEENMOVES = 5f;
+    private const float TIMEBETWEENMOVES = 4f;
     private PathFinder _pathFinder;
     Waypoint _currentWaypont;
     private List<Waypoint> _waypoints;
@@ -47,7 +47,7 @@ public class EnemyMovement : MonoBehaviour
             } 
         } 
 
-        else  { transform.position = Vector3.MoveTowards(transform.position, _currentWaypont.GetWorldPosition(), 0.5f);   }
+        else  { transform.position = Vector3.MoveTowards(transform.position, _currentWaypont.GetWorldPosition(), 0.2f);   }
 
     }
 

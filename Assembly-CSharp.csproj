@@ -67,6 +67,7 @@
     <Compile Include="Assets\AurynSky\Forest Pack\Scripts\MaterialMover.cs" />
     <Compile Include="Assets\AurynSky\Forest Pack\Scripts\Rotator.cs" />
     <Compile Include="Assets\AurynSky\Forest Pack\Scripts\WheelController.cs" />
+    <Compile Include="Assets\Scripts\Cannon.cs" />
     <Compile Include="Assets\Scripts\Cube.cs" />
     <Compile Include="Assets\Scripts\CubesHandler.cs" />
     <Compile Include="Assets\Scripts\EditorHelper.cs" />
